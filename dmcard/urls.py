@@ -16,9 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from rest_framework import routers
+from credit_card.api.viewsets import ClientViewSet, CardViewSet
 
 router = routers.DefaultRouter()
-router.register(r'client',)
+router.register(r'clients',ClientViewSet)
+router.register(r'cards',CardViewSet)
 
 
 urlpatterns = [
