@@ -4,9 +4,9 @@ from .serializers import ClientSerializer, CardSerializer
 
 class ClientViewSet(ModelViewSet):
     queryset = Client.objects.all()
-    serializers_class = ClientSerializer
+    serializer_class = ClientSerializer
 
 
 class CardViewSet(ModelViewSet):
     queryset = Card.objects.all()
-    serializers_class = CardSerializer
+    serializer_class = CardSerializer

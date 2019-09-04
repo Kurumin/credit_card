@@ -5,9 +5,9 @@ import random
 
 class Client(models.Model):
     name = models.CharField(verbose_name=u'Nome', max_length=50)
-    email = models.EmailField(verbose_name=u'Email')
-    cpf = models.CharField(verbose_name=u'CFP', max_length=14)
-    monthly_income = models.DecimalField(verbose_name=u'Renda Mensal', decimal_places=2)
+    email = models.EmailField(verbose_name=u'Email', unique=True)
+    cpf = models.CharField(verbose_name=u'CPF', max_length=14, unique=True)
+    monthly_income = models.DecimalField(verbose_name=u'Renda Mensal', max_digits=9, decimal_places=2)
     current_score = models.IntegerField(verbose_name=u'Pontuação Atual', default=random.randint(1, 999))
 
     def __str__(self):

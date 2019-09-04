@@ -14,15 +14,16 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from rest_framework import routers
 from credit_card.api.viewsets import ClientViewSet, CardViewSet
 
 router = routers.DefaultRouter()
 router.register(r'clients',ClientViewSet)
-router.register(r'cards',CardViewSet)
+router.register(r'clients/(?P<client>[\d]+)/cards',CardViewSet)
 
 
 urlpatterns = [
+    path('', include(router.urls)),
     path('admin/', admin.site.urls),
 ]
