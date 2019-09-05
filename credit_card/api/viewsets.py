@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from rest_framework.viewsets import ModelViewSet
 from credit_card.models import Client, Card
 from .serializers import ClientSerializer, CardSerializer
@@ -20,7 +21,7 @@ def get_score():
 
 
 def get_limit(score):
-    for limit_group in limit_credit:
+    for limit_group in sorted(limit_credit):
         if limit_group >= score:
             return limit_group
 
@@ -28,6 +29,12 @@ def get_limit(score):
 class ClientViewSet(ModelViewSet):
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
+
+    def partial_update(self, request, pk=None):
+        client = get_object_or_404(Client, pk=pk)
+        client.current_score = get_score()
+        serializer = ClientSerializer(client)
+        return Response(serializer.data)
 
 
 class CardViewSet(ModelViewSet):
@@ -39,12 +46,15 @@ class CardViewSet(ModelViewSet):
         serializer.is_valid(raise_exception=True)
         headers = self.get_success_headers(serializer.data)
 
-        client = Client.objects.get(pk=kwargs['client'])
+        client = get_object_or_404(Client, pk=kwargs['client'])
         card = Card(client_id=client.id, credit=limit_credit[get_limit(client.current_score)](client.monthly_income))
         card.save()
         return Response(self.get_serializer(card).data, status=status.HTTP_201_CREATED, headers=headers)
 
 
     def get_queryset(self):
-        client_id = self.kwargs['client']
-        return Card.objects.filter(client_id__exact=client_id)
+        try:
+            client_id = self.kwargs['client']
+            return Card.objects.filter(client_id__exact=client_id)
+        except:
+            return Card.objects.all()

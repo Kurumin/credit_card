@@ -1,5 +1,5 @@
 from django.db import models
-import random
+
 # Create your models here.
 
 
@@ -8,7 +8,7 @@ class Client(models.Model):
     email = models.EmailField(verbose_name=u'Email', unique=True)
     cpf = models.CharField(verbose_name=u'CPF', max_length=14, unique=True)
     monthly_income = models.DecimalField(verbose_name=u'Renda Mensal', max_digits=9, decimal_places=2)
-    current_score = models.IntegerField(verbose_name=u'Pontuação Atual', default=random.randint(1, 999))
+    current_score = models.IntegerField(verbose_name=u'Pontuação Atual', default=1)
 
     def __str__(self):
         return self.name
