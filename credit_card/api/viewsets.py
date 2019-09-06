@@ -4,15 +4,18 @@ from credit_card.models import Client, Card
 from .serializers import ClientSerializer, CardSerializer
 from rest_framework import status
 from rest_framework.response import Response
+import locale
+locale.setlocale(locale.LC_ALL, "Portuguese_Brazil.1252")
+
 
 import random
 
 limit_credit = {
     299: lambda income: 'Reprovado',
-    599: lambda income: 'R$ 1000',
-    850: lambda income: 'R$ {}'.format(income/2) if income > 2000 else 1000,
-    950: lambda income: 'R$ {}'.format(income*2),
-    999: lambda income: 'R$ 1000000'
+    599: lambda income: locale.currency(1000),
+    850: lambda income: locale.currency(income/2 if income > 2000 else 1000),
+    950: lambda income: locale.currency(income*2),
+    999: lambda income: locale.currency(1000000)
 }
 
 
@@ -33,6 +36,7 @@ class ClientViewSet(ModelViewSet):
     def partial_update(self, request, pk=None):
         client = get_object_or_404(Client, pk=pk)
         client.current_score = get_score()
+        client.save()
         serializer = ClientSerializer(client)
         return Response(serializer.data)
 

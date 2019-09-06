@@ -1,8 +1,8 @@
-import unittest
-from api.viewsets import limit_credit, get_limit
+from django.test import TestCase
+from credit_card.api.viewsets import limit_credit, get_limit
 # Create your tests here.
 
-class TestCreditCard(unittest.TestCase):
+class TestCreditCard(TestCase):
     def setUp(self):
         self.score_1 = 1
         self.score_2 = 299
@@ -28,17 +28,17 @@ class TestCreditCard(unittest.TestCase):
         self.assertEqual('Reprovado', limit_credit[get_limit(self.score_2)](self.income))
 
     def test_limit_2(self):
-        self.assertEqual('R$ 1000', limit_credit[get_limit(self.score_3)](self.income))
-        self.assertEqual('R$ 1000', limit_credit[get_limit(self.score_4)](self.income))
+        self.assertEqual('R$ 1000,00', limit_credit[get_limit(self.score_3)](self.income))
+        self.assertEqual('R$ 1000,00', limit_credit[get_limit(self.score_4)](self.income))
 
     def test_limit_3(self):
-        self.assertEqual('R$ 4250', limit_credit[get_limit(self.score_5)](self.income))
-        self.assertEqual('R$ 4250', limit_credit[get_limit(self.score_6)](self.income))
+        self.assertEqual('R$ 4250,00', limit_credit[get_limit(self.score_5)](self.income))
+        self.assertEqual('R$ 4250,00', limit_credit[get_limit(self.score_6)](self.income))
 
     def test_limit_4(self):
-        self.assertEqual('R$ 17000', limit_credit[get_limit(self.score_7)](self.income))
-        self.assertEqual('R$ 17000', limit_credit[get_limit(self.score_8)](self.income))
+        self.assertEqual('R$ 17000,00', limit_credit[get_limit(self.score_7)](self.income))
+        self.assertEqual('R$ 17000,00', limit_credit[get_limit(self.score_8)](self.income))
 
     def test_limit_5(self):
-        self.assertEqual('R$ 1000000', limit_credit[get_limit(self.score_9)](self.income))
-        self.assertEqual('R$ 1000000', limit_credit[get_limit(self.score_10)](self.income))
+        self.assertEqual('R$ 1000000,00', limit_credit[get_limit(self.score_9)](self.income))
+        self.assertEqual('R$ 1000000,00', limit_credit[get_limit(self.score_10)](self.income))

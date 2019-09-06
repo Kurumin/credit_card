@@ -17,13 +17,18 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 from credit_card.api.viewsets import ClientViewSet, CardViewSet
+from credit_card.views import home, client
 
 router = routers.DefaultRouter()
-router.register(r'clients',ClientViewSet)
-router.register(r'clients/(?P<client>[\d]+)/cards',CardViewSet)
+router.register(r'clients/(?P<client>[\d]+)/cards', CardViewSet)
+router.register(r'clients', ClientViewSet)
+
 
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('', home, name='home'),
+    path('client', client, name='client'),
+    path('api/', include(router.urls)),
     path('admin/', admin.site.urls),
+
 ]
