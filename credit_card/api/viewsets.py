@@ -5,7 +5,7 @@ from .serializers import ClientSerializer, CardSerializer
 from rest_framework import status
 from rest_framework.response import Response
 import locale
-locale.setlocale(locale.LC_ALL, "Portuguese_Brazil.1252")
+locale.setlocale(locale.LC_ALL, "pt_BR.utf8")
 
 
 import random
