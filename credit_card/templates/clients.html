@@ -10,8 +10,15 @@
         {% block middle %}
         <!-- OVERVIEW -->
         <section>
+             <h4>Lista de Clientes</h4>
+            <div class="content row padding-top-3 desktop-12 container">
+                {% for client_obj in clients_list %}
+                <p><a class="btn-basic btn-blue" data-scroll href="/api/clients/{{ client_obj.id }}">{{ client_obj.name }}</a></p>
+                {% endfor %}
+
+            </div>
         	<div class="content row padding-bottom-3 desktop-12 container">
-                <h1>Cadastro de Cliente</h1>
+                <h4>Cadastro de Cliente</h4>
                 <div class="desktop-6">
                     <form action="/api/clients/" novalidate method="post">
                         {% csrf_token %}

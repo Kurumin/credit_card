@@ -28,5 +28,5 @@ class ClientForm(forms.ModelForm):
         'placeholder': 'Renda Mensal',
         'class': 'form-control',
         'autocomplete': 'off',
-        'onkeypress': '$(this).mask("000000000,09")',
+        'onkeypress': '$(this).mask("00000000009",{reverse: true})',
     }))

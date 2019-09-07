@@ -1,0 +1,1 @@
+web: gunicorn dmcard.wsgi --log-file -
