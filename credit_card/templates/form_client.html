@@ -6,21 +6,22 @@
             {% if client %}
                 <input type="hidden" name="_method" value="put">
             {% endif %}
+            {{ form.errors }}
             <div class="form-row label-block input-text">
                 <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
                 {{ form.name.errors }}
                 {{ form.name }}
             </div>
-            <!--<div class="form-row label-block input-text">-->
-                <!--<label for="{{ form.cpf.id_for_label }}">{{ form.cpf.label }}</label>-->
-                <!--{{ form.cpf.errors }}-->
-                <!--{{ form.cpf }}-->
-            <!--</div>-->
-            <!--<div class="form-row label-block input-text">-->
-                <!--<label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>-->
-                <!--{{ form.email.errors }}-->
-                <!--{{ form.email }}-->
-            <!--</div>-->
+            <div class="form-row label-block input-text">
+                <label for="{{ form.cpf.id_for_label }}">{{ form.cpf.label }}</label>
+                {{ form.cpf.errors }}
+                {{ form.cpf }}
+            </div>
+            <div class="form-row label-block input-text">
+                <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+                {{ form.email.errors }}
+                {{ form.email }}
+            </div>
             <div class="form-row label-block input-text">
                 <label for="{{ form.monthly_income.id_for_label }}">{{ form.monthly_income.label }}</label>
                 {{ form.monthly_income.errors }}
