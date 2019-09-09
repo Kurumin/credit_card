@@ -5,6 +5,8 @@ from django.db import models
 
 class Client(models.Model):
     name = models.CharField(verbose_name=u'Nome', max_length=50)
+    email = models.EmailField(verbose_name=u'Email', null=True)
+    cpf = models.CharField(verbose_name=u'CPF', max_length=14, null=True)
     monthly_income = models.DecimalField(verbose_name=u'Renda Mensal', max_digits=9, decimal_places=2)
     current_score = models.IntegerField(verbose_name=u'Pontuação Atual', default=1)
 
