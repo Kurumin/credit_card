@@ -5,10 +5,11 @@ from .serializers import ClientSerializer, CardSerializer
 from rest_framework import status
 from rest_framework.response import Response
 import locale
+import random
+
+
 locale.setlocale(locale.LC_ALL, "pt_BR.utf8")
 
-
-import random
 
 limit_credit = {
     299: eval('lambda renda: "Reprovado"'),
@@ -18,9 +19,9 @@ limit_credit = {
     999: eval('lambda renda: locale.currency(1000000)')
 }
 
+
 def get_limit_rules():
     limit_credit_obj = dict()
-    function_str = ''
     for credit in Credit.objects.all():
         function_str = 'lambda renda: '
         if credit.credit != '"Reprovado"':
@@ -34,7 +35,6 @@ def get_limit_rules():
             else:
                 function_str += '{}'.format(credit.credit_condition)
         limit_credit_obj[int(credit.limit_score)] = eval(function_str)
-
 
     return limit_credit_obj
 
