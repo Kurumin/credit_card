@@ -18,7 +18,7 @@ class ClientForm(forms.ModelForm):
         'autocomplete': 'off'
     }))
 
-    cpf = forms.EmailField(label='CPF', widget=forms.TextInput(attrs={
+    cpf = forms.CharField(label='CPF', widget=forms.TextInput(attrs={
         'placeholder': 'CPF',
         'autocomplete': 'off',
         'onkeypress': '$(this).mask("000.000.000-09")',
