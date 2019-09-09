@@ -12,18 +12,6 @@ class ClientForm(forms.ModelForm):
         'autocomplete': 'off'
     }))
 
-    email = forms.EmailField(label='Email', widget=forms.TextInput(attrs={
-        'placeholder': 'Email',
-        'aria-describedby': 'nome',
-        'autocomplete': 'off'
-    }))
-
-    cpf = forms.EmailField(label='CPF', widget=forms.TextInput(attrs={
-        'placeholder': 'CPF',
-        'autocomplete': 'off',
-        'onkeypress': '$(this).mask("000.000.000-09")',
-    }))
-
     monthly_income = forms.CharField(label='Renda Mensal', widget=forms.TextInput(attrs={
         'placeholder': 'Renda Mensal',
         'class': 'form-control',

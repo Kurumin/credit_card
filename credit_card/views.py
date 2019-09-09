@@ -11,12 +11,25 @@ def home(request):
 def clients(request):
     clients_list = Client.objects.all()
     form = ClientForm()
+    if request.method == 'POST':
+        form = ClientForm(request.POST)
+        if form.is_valid():
+            client = form.save()
+            return render(request, 'client_dashboard.html', locals())
+    else:
+        form = ClientForm()
     return render(request, 'clients.html', locals())
 
 
 def client_detail(request, pk):
     client = get_object_or_404(Client,pk=pk)
-    form = ClientForm(instance=client)
+    if request.method == 'POST':
+        form = ClientForm(request.POST,instance=client)
+        if form.is_valid():
+            form.save()
+            return render(request, 'client_dashboard.html', locals())
+    else:
+        form = ClientForm(instance=client)
     return render(request, 'client_dashboard.html', locals())
 
 
