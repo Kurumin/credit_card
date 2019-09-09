@@ -39,7 +39,9 @@
                 <nav class="nav-inline" role="navigation">
                     <a href="javascript:void(0);" class="nav-mobile"><i class="fa fa-bars"></i></a>
                     <ul>
+                        {% block navigation %}
                         <li><a data-scroll href="{% url 'clients' %}">Clientes</a></li>
+                        {% endblock %}
                         <!--<li><a data-scroll href="#sponsors">Cartões</a></li>-->
                     </ul>
                 </nav>

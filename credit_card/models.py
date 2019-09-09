@@ -16,7 +16,7 @@ class Client(models.Model):
 
 
 class Card(models.Model):
-    client = models.ForeignKey(Client, verbose_name=u'Cliente', on_delete=models.CASCADE)
+    client = models.ForeignKey(Client, verbose_name=u'Cliente', related_name='cards', on_delete=models.CASCADE)
     credit = models.CharField(verbose_name='Limite de Crédito', max_length=50)
     created_at = models.DateTimeField(verbose_name='Data de Criação', auto_now_add=True)
 

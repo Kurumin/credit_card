@@ -10,13 +10,15 @@
         {% block middle %}
         <!-- OVERVIEW -->
         <section>
-             <h4>Lista de Clientes</h4>
+             <h4>Lista de Cartões</h4>
             <div class="content row padding-top-3 desktop-12 container">
-                {% for client_obj in clients_list %}
-                <p><a class="btn-basic btn-blue" data-scroll href="/clients/{{ client_obj.id }}">{{ client_obj.name }}</a></p>
+                {% for card in cards_list %}
+                <p>Card: {{ card.id }}</p>
+                <p>Crédito: {{ card.credit }}</p>
+                <p>Data: {{ card.created_at }}</p>
                 {% endfor %}
 
             </div>
-        	{% include 'form_client.html' %}
+
         </section>
         {% endblock %}

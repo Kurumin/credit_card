@@ -1,13 +1,96 @@
 {% extends 'index.html' %}
 {% load static %}
-        {% block js %}
-            {{ block.super }}
 
+{% block js %}
+    {{ block.super }}
+    <script src="{% static 'js/jquery.mask.min.js' %}"></script>
+    <script type="text/javascript">
+
+
+        function get_cards() {
+            $("#card_list").html("");
+            $.ajax({
+                type: "GET",
+                url: "/api/clients/{{ client.id }}/cards",
+                data: {},
+                dataType: "json",
+                success: function (cards) {
+                    if (cards.results.length >0) {
+                        $.each(cards.results, function(i, card) {
+                            html = '<div style="boder: 1px solid;" id="'+card.id+'"><p>Crédito: '+card.credit+'    <button onclick="delete_card('+card.id+')">Excluir</button></p></div>';
+                            $("#card_list").append(html);
+                        });
+                    }
+                    else{
+                        html = '<p>Nenhum cartão ainda.</p>';
+                        $("#card_list").append(html);
+                    }
+                }
+            });
+        }
+
+        function update_score() {
+            $.ajax({
+                type: "PATCH",
+                url: "/api/clients/{{ client.id }}/",
+                data: {},
+                dataType: "json",
+                success: function (retorno) {
+                    $("#score").text(retorno.current_score);
+                }
+            });
+        }
+
+        function create_card() {
+            $.ajax({
+                type: "POST",
+                url: "/api/clients/{{ client.id }}/cards/",
+                data: {},
+                dataType: "json",
+                success: function (retorno) {
+                    get_cards();
+                }
+            });
+        }
+
+        function delete_card(card_id) {
+            $.ajax({
+                type: "DELETE",
+                url: "/api/clients/{{ client.id }}/cards/"+card_id,
+                data: {},
+                dataType: "json",
+                success: function (retorno) {
+                    get_cards();
+                }
+            });
+        }
+
+        $(document).ready(function() {
+            get_cards();
+
+        });
+
+    </script>
+{% endblock%}
+
+        {% block navigation %}
+            <li><a data-scroll href="{% url 'cards' client_id=client.id %}">Cartões</a></li>
         {% endblock %}
+
         {% block middle %}
         <!-- OVERVIEW -->
-         <section id="overview">
-
+        <section class="text-align-center desktop-6 gutter-left padding-top-3 row">
+             <h4>Cliente: {{ client.name }}</h4>
+            <p>Score: <span id="score">{{ client.current_score }}</span></p>
+            <button onclick="update_score()" n>Atualizar Score</button>
+            {% include 'form_client.html' %}
         </section>
-        {% endblock %}
 
+        <section class="text-align-center desktop-6 gutter-left padding-top-3 row">
+             <h4>Cartões</h4>
+            <div id="card_list"></div>
+            <p class="btn-basic btn-blue" onclick="create_card()">Solicitar Cartão</p>
+        </section>
+
+
+        {% endblock %}
