@@ -1,6 +1,21 @@
 from django.db import models
+from django.core.validators import RegexValidator
 
-# Create your models here.
+class Credit(models.Model):
+    limit_score = models.IntegerField(verbose_name=u'Score Limite')
+    credit = models.CharField(verbose_name='Crédito se condição satisfeita', max_length=30,
+                              help_text="Deve ser somente o termo '\"Reprovado\"' ou 'renda', números e operadores aritméticos(+-/*)",
+                              validators=[RegexValidator('^"Reprovado"|((renda|[0-9]+)([\+-\/\*](renda|[0-9]+))?)$', message="Deve ser somente o termo 'renda', números e operadores aritméticos")])
+    condition = models.CharField(verbose_name='Condição', max_length=10,
+                                 help_text="Deve ser somente o termo 'renda', números e operadores de comparação(>=<)",
+                                 validators=[RegexValidator('^(renda|[0-9]+)([>=<]{1,2}(renda|[0-9]+))$', message="Deve ser somente o termo 'renda', números e operadores aritméticos")], null=True, blank=True)
+    credit_condition = models.CharField(verbose_name='Crédito se condição não satisfeita', max_length=30,
+                                        help_text="Deve ser somente o termo '\"Reprovado\"' ou 'renda', números e operadores aritméticos(+-/*)",
+                                        validators=[RegexValidator('^"Reprovado"|((renda|[0-9]+)([\+-\/\*](renda|[0-9]+))?)$', message="Deve ser somente o termo 'renda', números e operadores aritméticos")], default='"Reprovado"', null=True, blank=True)
+
+
+    def __str__(self):
+        return '{}'.format(self.limit_score)
 
 
 class Client(models.Model):
