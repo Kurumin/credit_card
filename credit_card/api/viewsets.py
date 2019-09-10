@@ -69,7 +69,7 @@ class CardViewSet(ModelViewSet):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         headers = self.get_success_headers(serializer.data)
-        limit_credit_array = get_limit_rules()
+        limit_credit_array = get_limit_rules() if len(get_limit_rules()) >= len(limit_credit) else limit_credit
         client = get_object_or_404(Client, pk=kwargs['client'])
         card = Card(client_id=client.id, credit=limit_credit_array[get_limit(client.current_score)](client.monthly_income))
         card.save()
