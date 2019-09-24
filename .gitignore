@@ -47,9 +47,6 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 
-# Migrations
-credit_card/migrations/0*
-
 # Translations
 *.mo
 *.pot
